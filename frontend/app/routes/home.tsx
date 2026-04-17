@@ -14,6 +14,10 @@ export default function Home() {
                     <Button className="mt-2" onClick={() => setCount((count) => count + 1)}>
                         Button {count}
                     </Button>
+
+                    <Button className="mt-2" onClick={() => setCount((count) => count + 1)}>
+                        Button {count}
+                    </Button>
                 </div>
             </div>
         </div>
