@@ -1,12 +1,10 @@
-"use client";
-
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
-import { Button } from "../components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
     Card,
     CardContent,
@@ -14,21 +12,15 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "../components/ui/card";
-import {
-    Field,
-    FieldDescription,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-} from "../components/ui/field";
-import { Input } from "../components/ui/input";
+} from "~/components/ui/card";
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "~/components/ui/field";
+import { Input } from "~/components/ui/input";
 import {
     InputGroup,
     InputGroupAddon,
     InputGroupText,
     InputGroupTextarea,
-} from "../components/ui/input-group";
+} from "~/components/ui/input-group";
 
 const formSchema = z.object({
     title: z
@@ -41,7 +33,7 @@ const formSchema = z.object({
         .max(100, "Description must be at most 100 characters."),
 });
 
-export default function Home() {
+export default function BugReportForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -74,7 +66,7 @@ export default function Home() {
                 <CardDescription>Help us improve by reporting bugs you encounter.</CardDescription>
             </CardHeader>
             <CardContent>
-                <form id="form-rhf-demo" onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+                <form id="form-rhf-demo" onSubmit={() => void form.handleSubmit(onSubmit)}>
                     <FieldGroup>
                         <Controller
                             name="title"
@@ -90,7 +82,7 @@ export default function Home() {
                                         autoComplete="off"
                                     />
                                     {fieldState.invalid && (
-                                        <FieldError>{fieldState.error?.message}</FieldError>
+                                        <FieldError errors={[fieldState.error]} />
                                     )}
                                 </Field>
                             )}
@@ -112,8 +104,8 @@ export default function Home() {
                                             className="min-h-24 resize-none"
                                             aria-invalid={fieldState.invalid}
                                         />
-                                        <InputGroupAddon>
-                                            <InputGroupText>
+                                        <InputGroupAddon align="block-end">
+                                            <InputGroupText className="tabular-nums">
                                                 {field.value.length}/100 characters
                                             </InputGroupText>
                                         </InputGroupAddon>
@@ -123,7 +115,7 @@ export default function Home() {
                                         actually happened.
                                     </FieldDescription>
                                     {fieldState.invalid && (
-                                        <FieldError>{fieldState.error?.message}</FieldError>
+                                        <FieldError errors={[fieldState.error]} />
                                     )}
                                 </Field>
                             )}
@@ -132,7 +124,7 @@ export default function Home() {
                 </form>
             </CardContent>
             <CardFooter>
-                <Field>
+                <Field orientation="horizontal">
                     <Button type="button" variant="outline" onClick={() => form.reset()}>
                         Reset
                     </Button>
